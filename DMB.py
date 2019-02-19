@@ -58,6 +58,7 @@ def save(bot, update, args):
 			if (result[0]):
 				cursor.execute("UPDATE memory SET value = %s WHERE name = %s", (str(args[0]), "prova"))
 			else:
+				bot.send_message(chat_id=update.message.chat_id, text="I'm in else with arg value: {0}".format(args[0]))
 				cursor.execute("INSERT INTO memory (name, value) VALUES (%s, %s)", ("prova", str(args[0])))
 			conn.commit()
 			bot.send_message(chat_id=update.message.chat_id, text="Value saved.")

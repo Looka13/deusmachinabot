@@ -71,7 +71,7 @@ def retrieve(bot, update):
 	try:
 		conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 		cursor = conn.cursor()
-		cursor.execute("SELECT EXISTS(SELECT 1 FROM memory WHERE name = prova)")
+		cursor.execute("SELECT EXISTS(SELECT 1 FROM memory WHERE name = %s)", ("prova",))
 		result = cursor.fetchone()
 		if (result):
 			if (result[2]):

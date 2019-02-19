@@ -62,7 +62,7 @@ def save(bot, update, args):
 			conn.commit()
 			bot.send_message(chat_id=update.message.chat_id, text="Value saved.")
 		except psycopg2.Error as e:
-			bot.send_message(chat_id=update.message.chat_id, text="Saving was unsuccessful. {0}", e.pgerror)
+			bot.send_message(chat_id=update.message.chat_id, text="Saving was unsuccessful. {0}".format(e.pgerror))
 		finally:
 			if (conn):
 				cursor.close()

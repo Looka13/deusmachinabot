@@ -8,7 +8,7 @@ TOKEN = os.environ.get('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
 
 def sigterm_handler(signum, frame):
-	updater.bot.send_message(chat_id="@Looka13", text="SIGTERM signal received.")
+	updater.bot.send_message(chat_id=70649696, text="SIGTERM signal received.")
 
 updater = telegram.ext.Updater(token=TOKEN, user_sig_handler=sigterm_handler)
 dispatcher = updater.dispatcher

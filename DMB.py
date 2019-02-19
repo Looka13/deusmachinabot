@@ -72,11 +72,9 @@ def retrieve(bot, update):
 		conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 		cursor = conn.cursor()
 		cursor.execute("SELECT EXISTS(SELECT 1 FROM memory WHERE name = %s)", ("prova",))
-		bot.send_message(chat_id=update.message.chat_id, text="Execute done.")
 		result = cursor.fetchone()
-		bot.send_message(chat_id=update.message.chat_id, text="Fetchone done.")
+		bot.send_message(chat_id=update.message.chat_id, text=str(result))
 		if (result):
-			bot.send_message(chat_id=update.message.chat_id, text="Result evaluation done.")
 			if (result[2]):
 				bot.send_message(chat_id=update.message.chat_id, text="Retrieved value: {0}".format(result[2]))
 		else:

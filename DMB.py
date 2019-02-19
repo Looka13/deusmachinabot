@@ -49,23 +49,26 @@ def start(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="The bot is not working yet!")
 
 def save(bot, update, args):
-	try:
-		conn = psycopg2.connect(DATABASE_URL, sslmode="require")
-		cursor = conn.cursor()
-		cursor.execute("SELECT value FROM memory WHERE name = prova")
-		result = cursor.fetchone()
-		if (result):
-			cursor.execute("UPDATE memory SET value = %s WHERE id = %s", (str(args[0]), result[0]))
-		else:
-			cursor.execute("INSERT INTO memory (name, value) VALUES (%s, %s)", ("prova", str(args[0])))
-		conn.commit()
-		bot.send_message(chat_id=update.message.chat_id, text="Value saved.")
-	except:
-		bot.send_message(chat_id=update.message.chat_id, text="Saving was unsuccessful.")
-	finally:
-		if (conn):
-			cursor.close()
-			conn.close()
+	if (args[0]):
+		try:
+			conn = psycopg2.connect(DATABASE_URL, sslmode="require")
+			cursor = conn.cursor()
+			cursor.execute("SELECT EXISTS(SELECT 1 FROM memory WHERE name = %s)", ("prova",))
+			result = cursor.fetchone()
+			if (result[0]):
+				cursor.execute("UPDATE memory SET value = %s WHERE name = %s", (str(args[0]), "prova"))
+			else:
+				cursor.execute("INSERT INTO memory (name, value) VALUES (%s, %s)", ("prova", str(args[0])))
+			conn.commit()
+			bot.send_message(chat_id=update.message.chat_id, text="Value saved.")
+		except:
+			bot.send_message(chat_id=update.message.chat_id, text="Saving was unsuccessful.")
+		finally:
+			if (conn):
+				cursor.close()
+				conn.close()
+	else:
+		bot.send_message(chat_id=update.message.chat_id, text="You need to pass an argument to this command.")
 
 def retrieve(bot, update):
 	try:

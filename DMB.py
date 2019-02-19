@@ -52,7 +52,7 @@ def save(bot, update, args):
 	try:
 		conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 		cursor = conn.cursor()
-		cursor.execute("SELECT value FROM memory WHERE name = prova"))
+		cursor.execute("SELECT value FROM memory WHERE name = prova")
 		result = cursor.fetchone()
 		if (result):
 			cursor.execute("UPDATE memory SET value = %s WHERE id = %s", (str(args[0]), result[0]))
@@ -71,7 +71,7 @@ def retrieve(bot, update):
 	try:
 		conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 		cursor = conn.cursor()
-		cursor.execute("SELECT value FROM memory WHERE name = prova"))
+		cursor.execute("SELECT value FROM memory WHERE name = prova")
 		result = cursor.fetchone()
 		if (result):
 			if (result[2]):

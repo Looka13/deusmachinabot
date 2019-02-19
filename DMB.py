@@ -49,7 +49,7 @@ def start(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="The bot is not working yet!")
 
 def save(bot, update, args):
-	if (args[0]):
+	if (len(args) > 0):
 		try:
 			conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 			cursor = conn.cursor()

@@ -73,10 +73,13 @@ def retrieve(bot, update):
 		cursor = conn.cursor()
 		cursor.execute("SELECT EXISTS(SELECT 1 FROM memory WHERE name = %s)", ("prova",))
 		result = cursor.fetchone()
-		bot.send_message(chat_id=update.message.chat_id, text=str(result))
-		if (result):
+		if (result[0]):
+			cursor.execute("SELECT * FROM memory WHERE name = %s", ("prova",))
+			result = cursor.fetchone()
 			if (result[2]):
 				bot.send_message(chat_id=update.message.chat_id, text="Retrieved value: {0}".format(result[2]))
+			else:
+				bot.send_message(chat_id=update.message.chat_id, text="Value saved but empty.")
 		else:
 			bot.send_message(chat_id=update.message.chat_id, text="No value saved.")
 	except:

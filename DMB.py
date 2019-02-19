@@ -6,7 +6,7 @@ from datetime import datetime
 
 TOKEN = os.environ.get('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
-updater = telegram.ext.Updater(TOKEN)
+updater = telegram.ext.Updater(token=TOKEN, user_sig_handler=sigterm_handler)
 dispatcher = updater.dispatcher
 random.seed()
 
@@ -28,6 +28,9 @@ def processText(bot, update):
 
 def start(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="The bot is not working yet!")
+	
+def sigterm_handler(signum, frame):
+	bot.send_message(chat_id="@Looka13", text="SIGTERM signal received.")
 
 # add handlers
 msg_handler = MessageHandler(Filters.text, processText)

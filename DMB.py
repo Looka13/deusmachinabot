@@ -20,7 +20,7 @@ random.seed()
 try:
 	conn = psycopg2.connect(DATABASE_URL, sslmode="require")
 	cursor = conn.cursor()
-	cursor.execute("CREATE TABLE IF NOT EXISTS memory (id INT PRIMARY KEY, name TEXT NOT NULL, value TEXT)"))
+	cursor.execute("CREATE TABLE IF NOT EXISTS memory (id INT PRIMARY KEY, name TEXT NOT NULL, value TEXT)")
 	conn.commit()
 except:
 	pass
